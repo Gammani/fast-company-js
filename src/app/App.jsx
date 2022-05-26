@@ -7,38 +7,41 @@ import NavBar from "./component/ui/NavBar";
 import {ToastContainer} from "react-toastify";
 import {ProfessionProvider} from "./hooks/useProfession";
 import {QualitiesProvider} from "./hooks/useQualities";
+import AuthProvider from "./hooks/useAuth";
 
 const App = () => {
 
     return (
         <div>
-            <NavBar/>
-            <QualitiesProvider>
-                <ProfessionProvider>
-                    <Routes>
+            <AuthProvider>
+                <NavBar/>
+                <QualitiesProvider>
+                    <ProfessionProvider>
+                        <Routes>
 
-                        <Route path={"/users"}>
-                            <Route path={":userId"} element={<Users/>}>
-                                <Route path={":edit"} element={<Users/>}/>
+                            <Route path={"/users"}>
+                                <Route path={":userId"} element={<Users/>}>
+                                    <Route path={":edit"} element={<Users/>}/>
+                                    <Route path={""} element={<Users/>}/>
+                                    <Route/>
+                                </Route>
                                 <Route path={""} element={<Users/>}/>
-                                <Route/>
+
                             </Route>
-                            <Route path={""} element={<Users/>}/>
+                            <Route path={"/login"}>
+                                <Route path={":type"} element={<Login/>}/>
+                                <Route path={""} element={<Login/>}/>
+                            </Route>
 
-                        </Route>
-                        <Route path={"/login"}>
-                            <Route path={":type"} element={<Login/>}/>
-                            <Route path={""} element={<Login/>}/>
-                        </Route>
-
-                        <Route path={"/"} element={<Main/>}/>
-                        <Route
-                            path={"*"}
-                            element={<Navigate to="/" replace/>}
-                        />
-                    </Routes>
-                </ProfessionProvider>
-            </QualitiesProvider>
+                            <Route path={"/"} element={<Main/>}/>
+                            <Route
+                                path={"*"}
+                                element={<Navigate to="/" replace/>}
+                            />
+                        </Routes>
+                    </ProfessionProvider>
+                </QualitiesProvider>
+            </AuthProvider>
             <ToastContainer/>
         </div>
     );
